@@ -1,18 +1,20 @@
 import pypdf
-from pypdf import PdfReader
-reader = PdfReader("dummy.pdf")
-page = reader.pages[0]
-print(page.extract_text(0))
+import re
+import warnings
+reader = pypdf.PdfReader("sample-local-pdf.pdf")
 
-pdf_document = "dummy.pdf"
-file_name = pdf_document.split('.')
+# Filter out all warnings, including those from pypdf
+warnings.filterwarnings("ignore")
 
-with open(pdf_document, "rb") as filehandle, open(pdf_document, mode='w', encoding='UTF-8') as output:
-    pdf = PdfReader(filehandle)
-    num_of_pages = len(pdf.pages)
-    for page_number in range(num_of_pages):
-        page = pdf.pages[page_number]
-        print(f"Page: {page_number+1}", file=output)
-        print('', file=output)
-        print(page.extract_text(), file=output)
-        print('', file=output)
+# To specifically ignore UserWarnings which often include the "wrong pointing object" messages
+warnings.filterwarnings("ignore", category=UserWarning)
+
+num_of_pages = len(reader.pages)
+
+#define key terms
+string1 = "three"
+
+for page in reader.pages:
+    text = page.extract_text()
+    res_search = re.search(string1, text)
+    print(res_search)
