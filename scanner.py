@@ -3,21 +3,24 @@ import re
 import warnings
 reader = pypdf.PdfReader("resume1.pdf")
 
-num_of_pages = len(reader.pages)
+points = [0, 0, 0, 0, 0, 0]
+index = 0
 
-#define key terms
-string1 = "experience"
-string2 = "graduate"
-string3 = "Computer Science"
-string4 = "Engineering"
+#define key terms pt 2
+exp = ["computer science", "engineering", "research", "intern", "tutor", "project", "software engineering", "associate", "app", "years"]
+lead = ["host", "capitan", "tutor", ]
+edu = ["Ph.D", "B.S.", "bachelor", "graduate", "4.0", "computer science", "engineering"]
+skls = ["java", "javascript", "python", "html", "css", "c++", "c#", "C", "SQL"]
 
-for page in reader.pages:
-    text = page.extract_text()
-    res_search = re.search(string1, text)
-    print(text)
-    res_search = re.search(string2, text)
-    print(text)
-    res_search = re.search(string3, text)
-    print(text)
-    res_search = re.search(string4, text)
-    print(text)
+def points(exp, lead, edu, skls):
+    global points
+    if exp:
+        points[index] += 2
+    if lead:
+        points[index] += 1
+    if edu:
+        points[index] += 1.5
+    if skls:
+        points[index] += 1
+
+print()
